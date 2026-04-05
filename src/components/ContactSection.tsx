@@ -40,15 +40,6 @@ const contacts = [
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.08 },
-  }),
-};
-
 const ContactSection = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
@@ -66,18 +57,15 @@ const ContactSection = () => {
         formRef.current,
         "7bF70EuO8emoldLIs"   
       )
-      .then(
-        () => {
-          alert("Message sent successfully 🚀");
-          formRef.current?.reset();
-          setLoading(false);
-        },
-        (error) => {
-          console.error(error);
-          alert("Failed to send message ❌");
-          setLoading(false);
-        }
-      );
+      .then(() => {
+        alert("Message sent 🚀");
+        formRef.current?.reset();
+        setLoading(false);
+      })
+      .catch(() => {
+        alert("Failed ❌");
+        setLoading(false);
+      });
   };
 
   return (
@@ -85,88 +73,114 @@ const ContactSection = () => {
       <div className="relative max-w-4xl mx-auto">
 
         {/* HEADER */}
-        <motion.div className="mb-16">
+        <div className="mb-16">
           <p className="text-xs uppercase mb-3 text-primary">Contact</p>
-          <h2 className="text-3xl mb-3 text-white">
+          <h2 className="text-3xl text-foreground mb-3">
             Let's build something together.
           </h2>
-        </motion.div>
+        </div>
 
         {/* CONTACT CARDS */}
-        <div className="grid gap-4 mb-10">
+        <div className="grid gap-4 mb-12">
           {contacts.map(({ icon: Icon, label, display, href, accent }, i) => {
             const Tag = href ? motion.a : motion.div;
+
             return (
               <Tag
                 key={label}
                 href={href}
                 target="_blank"
-                custom={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                className="flex items-center gap-4 p-4 border rounded-xl"
+                className="flex items-center gap-4 p-4 rounded-xl border"
+                style={{
+                  border: "1px solid hsl(var(--border))",
+                  background: "hsl(var(--card))",
+                }}
               >
-                <Icon />
-                <div>
-                  <p className="text-sm text-gray-400">{label}</p>
-                  <p className="text-white">{display}</p>
+                <div
+                  style={{
+                    background: accent.bg,
+                    border: `1px solid ${accent.border}`,
+                    color: accent.color,
+                  }}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg"
+                >
+                  <Icon size={16} />
                 </div>
-                {href && <ArrowUpRight />}
+
+                <div>
+                  <p className="text-xs text-muted-foreground">{label}</p>
+                  <p className="text-sm text-foreground">{display}</p>
+                </div>
+
+                {href && <ArrowUpRight className="ml-auto" />}
               </Tag>
             );
           })}
         </div>
 
-        {/* 🔥 EMAIL FORM */}
-        <form
+        {/* 🔥 EMAIL FORM (MATCHED UI) */}
+        <motion.form
           ref={formRef}
           onSubmit={sendEmail}
-          className="bg-[#0c0a1a] border border-gray-700 rounded-2xl p-6 space-y-5"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="p-6 rounded-2xl space-y-5"
+          style={{
+            border: "1px solid hsl(var(--border))",
+            background: "hsl(var(--card))",
+          }}
         >
-          <h2 className="text-2xl text-center text-white">
+          <h3 className="text-xl text-foreground text-center">
             Connect With Me 🚀
-          </h2>
+          </h3>
 
-          <input
-            type="email"
-            name="user_email"
-            placeholder="Your Email"
-            required
-            className="w-full p-3 rounded-lg bg-transparent border border-gray-600 text-white"
-          />
-
-          <input
-            type="text"
-            name="user_name"
-            placeholder="Your Name"
-            required
-            className="w-full p-3 rounded-lg bg-transparent border border-gray-600 text-white"
-          />
-
-          <input
-            type="text"
-            name="subject"
-            placeholder="Subject"
-            className="w-full p-3 rounded-lg bg-transparent border border-gray-600 text-white"
-          />
+          {/* INPUTS */}
+          {[
+            { name: "user_email", placeholder: "Your Email", type: "email" },
+            { name: "user_name", placeholder: "Your Name", type: "text" },
+            { name: "subject", placeholder: "Subject", type: "text" },
+          ].map((input) => (
+            <input
+              key={input.name}
+              type={input.type}
+              name={input.name}
+              placeholder={input.placeholder}
+              required={input.name !== "subject"}
+              className="w-full p-3 rounded-lg outline-none"
+              style={{
+                border: "1px solid hsl(var(--border))",
+                background: "transparent",
+                color: "hsl(var(--foreground))",
+              }}
+            />
+          ))}
 
           <textarea
             name="message"
             placeholder="Message"
             rows={5}
             required
-            className="w-full p-3 rounded-lg bg-transparent border border-gray-600 text-white"
+            className="w-full p-3 rounded-lg outline-none"
+            style={{
+              border: "1px solid hsl(var(--border))",
+              background: "transparent",
+              color: "hsl(var(--foreground))",
+            }}
           />
 
+          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-pink-500 to-orange-500"
+            className="w-full py-3 rounded-lg font-semibold"
+            style={{
+              background: "hsl(var(--primary))",
+              color: "white",
+            }}
           >
             {loading ? "Sending..." : "Send"}
           </button>
-        </form>
+        </motion.form>
 
       </div>
     </section>
