@@ -59,7 +59,7 @@ const HeroSection = () => {
                 animation: "pulse 2s ease-in-out infinite",
               }}
             />
-            Open to AI/ML Roles
+            Open to Work
           </span>
         </motion.div>
 
@@ -124,7 +124,7 @@ const HeroSection = () => {
             fontFamily: "'DM Sans', sans-serif",
           }}
         >
-          LLM Systems · RAG Engineer · Multi-Agent
+          AI Systems Engineer
         </motion.p>
 
         {/* Value prop */}
@@ -139,7 +139,7 @@ const HeroSection = () => {
           }}
         >
           Building scalable LLM systems with RAG pipelines and multi-agent
-          architectures — from prototype to production.
+          architectures from prototype to production.
         </motion.p>
 
         {/* CTA row */}

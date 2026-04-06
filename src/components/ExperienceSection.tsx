@@ -15,7 +15,7 @@ const experiences = [
     stats: [
       { value: "4", label: "AI Agents" },
       { value: "120+", label: "APIs" },
-      { value: "40%", label: "Less manual work" },
+      { value: "80%", label: "Less manual work" },
     ],
   },
   {
@@ -31,7 +31,7 @@ const experiences = [
     stats: [
       { value: "100+", label: "Students" },
       { value: "5+", label: "Events" },
-      { value: "GenAI", label: "Focus area" },
+      { value: "GenAI, ML", label: "Focus area" },
     ],
   },
 ];

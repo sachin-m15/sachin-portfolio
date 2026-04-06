@@ -92,7 +92,7 @@ const AboutSection = () => {
           >
             <motion.div variants={fadeUp}>
               <p className="text-sm leading-7 text-muted-foreground">
-                AI/ML developer focused on production-ready intelligent systems —
+                AI/ML developer focused on production-ready intelligent systems,
                 LLMs, RAG pipelines, and multi-agent architectures that integrate
                 vector databases with scalable backends.
               </p>
